@@ -1,0 +1,876 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Golden Cage: How Boston's Liquor License Cap Stunts the Nightlife Economy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&display=swap" rel="stylesheet">
+  
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js'></script>
+  <style>
+    /* ---------------------------------------------------- */
+    /* --- Base Styles (Dark Mode) --- */
+    /* ---------------------------------------------------- */
+    *{box-sizing:border-box}
+    /* 字体更新：使用 Georgia/Times New Roman 衬线字体，模仿 NYT 风格 */
+    html,body{
+        height:100%;
+        margin:0;
+        font-family:Georgia, 'Times New Roman', serif;
+        color:#FFFFFF; /* 全局文字：白色 */
+        background:#101010; /* 全局背景：深色 */
+        scroll-behavior:smooth;
+    }
+    a{color:#87CEFA;text-decoration:none} /* 链接色：浅蓝色 */
+    h1{
+        font-family:'Merriweather', Georgia, serif;
+        font-size:clamp(32px,5vw,56px);
+        margin:60px 0 20px;
+        line-height:1.4;
+        font-weight:700;
+        color:#ffe44a; /* H1 标题色：亮黄色 */
+    }
+    h3{
+        font-family:'Merriweather', Georgia, serif;
+        font-size:clamp(22px, 3vw, 28px); 
+        font-weight:600; 
+        color:#ffffff; /* H3 标题色：亮黄色 */
+        margin-bottom:20px; 
+        border-left: 4px solid #ffe44a; /* 强调色：亮黄色 */
+        padding-left: 10px;
+    }
+    h4{font-family:Georgia, 'Times New Roman', serif; font-weight:700; color:#ffe44a; margin-bottom:10px;} /* H4 小标题色：亮黄色 */
+    p{line-height:1.8; margin-bottom:1.4rem; font-size:1.4rem;}
+
+    /* --- Page layout --- */
+    header.hero{
+      height:90vh;min-height:420px;display:flex;align-items:center;justify-content:center;color:white;text-align:center;position:relative;overflow:hidden;
+      /* 已更新: 标题背景图使用本地文件 pic1.jpg */
+      background-image:url('pic1.jpg'); 
+      background-size:cover;background-position:center center;
+    }
+    header.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.4), rgba(0,0,0,0.7));z-index:1;} /* 保持深色叠加 */
+    .hero-inner{position:relative;z-index:2;max-width:900px;padding:40px}
+    .byline{opacity:.95;font-weight:500;font-size:1rem;margin-top:10px; font-family: 'Inter', sans-serif; color: #CCC;} /* byline 颜色调整 */
+
+    /* 新增：特色照片样式 */
+    .feature-image {
+        width: 100%;
+        max-width: 1000px;
+        height: auto;
+        margin: 20px auto 40px auto;
+        display: block;
+        object-fit: cover;
+       
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3); /* 调整阴影以适应深色背景 */
+    }
+    .image-caption {
+        font-family: 'Inter', sans-serif;
+        font-size: 1.1rem;
+        color: #CCC; /* 说明文字颜色调整 */
+        text-align: right;
+        max-width: 1000px;
+        margin: -25px auto 40px auto;
+        padding-right: 18px;
+        font-style: italic;
+    }
+
+    main{
+        max-width:1000px;
+        margin:0 auto;
+        padding:40px 18px 30px; 
+        background:transparent; /* main背景设为透明，继承body背景 */
+    }
+    section.panel{padding:20px 0;}
+    .container{display:flex;gap:40px;align-items:flex-start}
+    .col{flex:1}
+
+    /* --- Data Viz Card Style --- */
+    .data-card {
+        background: #222; /* 图表卡片背景改为深色 */
+        border: 1px solid #444; /* 边框改为深色 */
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        margin-top: 20px;
+        color: #FFFFFF;
+    }
+    .data-card canvas { width: 100%; height: 350px; }
+
+    /* ---------------------------------------------------- */
+    /* --- Scrollytelling and GSAP Styles --- */
+    /* ---------------------------------------------------- */
+    #scrollytelling-container {
+      display: flex;
+      position: relative;
+      min-height: 400vh;
+      padding-top: 50px;
+    }
+    /* The Pinned Graphic (Chart 3) */
+    #scrollytelling-graphic {
+      position: sticky;
+      top: 10vh;
+      height: 80vh;
+      width: 45%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #222; /* 图形容器背景改为深色 */
+      border-radius: 8px;
+      border: 1px solid #444;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+      padding: 20px;
+      transition: background-color 0.5s ease;
+    }
+    #chart-viz {
+        width: 100%;
+        height: 100%;
+        background: #222; /* 图表内部背景改为深色 */
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        transition: transform 0.5s ease;
+    }
+    .viz-item {
+        padding: 12px 24px;
+        margin: 8px;
+        background: #333; /* 初始项目背景改为深色 */
+        color: #FFFFFF; /* 初始文字改为白色 */
+        border-radius: 4px;
+        width: 250px;
+        text-align: center;
+        font-weight: 600;
+        transform: scale(0.9); /* Initial GSAP state */
+        border: 1px solid #444;
+        transition: background-color 0.3s, color 0.3s;
+    }
+    /* 突出显示状态的颜色 */
+    .viz-item-highlight {
+        background: #ffe44a; /* 强调色：亮黄色 */
+        color: #111; /* 突出时文字改为深色 */
+    }
+    .viz-label {
+        color: #CCC; /* 标签文字颜色 */
+        font-size: 0.9rem;
+        margin-top: 10px;
+    }
+
+    /* The Scrolling Steps */
+    #scrollytelling-text {
+      width: 55%;
+      padding-left: 40px;
+    }
+    .step {
+      padding: 40px;
+      margin-bottom: 60vh;
+      background: #1e1e1e; /* 步骤卡片背景改为深色 */
+      border-left: 6px solid #444; /* 初始边框颜色 */
+      border-radius: 4px;
+      opacity: 0.4;
+      transition: opacity 0.5s, border-color 0.5s;
+    }
+    .step.active {
+      opacity: 1;
+      border-left-color: #ffe44a; /* 强调色与图表统一：亮黄色 */
+    }
+    /* 确保步骤内的标题也使用亮黄色 */
+    .step h4 { color: #ffe44a !important; font-size:20px;} 
+
+    /* ---------------------------------------------------- */
+    /* --- Scrubbing Animation Styles --- */
+    /* ---------------------------------------------------- */
+    .scrub-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      margin: 80px 0;
+      background: #1e1e1e; /* 浅色背景更新闻化为深色 */
+    }
+    .scrub-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: clamp(2rem, 6vw, 5rem);
+      font-weight: 700;
+      opacity: 0.9;
+      color: #ffe44a; /* 已统一颜色为强调色：亮黄色 */
+      font-family: 'Times New Roman', Georgia, serif;
+    }
+
+    /* ---------------------------------------------------- */
+    /* --- General UI & Responsive --- */
+    /* ---------------------------------------------------- */
+    .fade-up,.float-left,.float-right,.reveal-bottom{opacity:0;transform:translateY(20px);transition:all 700ms cubic-bezier(.22,.9,.35,1)}
+    .visible{opacity:1;transform:none}
+    .split{display:flex;gap:40px;align-items:center}
+    .split .imgwrap{flex:1;min-width:280px}
+    .split img{width:100%;border-radius:8px;display:block;box-shadow:0 5px 15px rgba(0,0,0,0.3)}
+    footer{padding:40px 18px;text-align:center;color:#CCC;} /* 页脚文字颜色调整 */
+
+    @media (max-width:960px){
+      .container, .split, #scrollytelling-container{flex-direction:column}
+      header.hero{height:56vh}
+      #scrollytelling-graphic {
+        position: relative;
+        width: 100%;
+        height: 50vh;
+        top: auto;
+        margin-bottom: 40px;
+      }
+      #scrollytelling-text {
+        width: 100%;
+        padding-left: 0;
+      }
+      .step {
+        margin-bottom: 20vh;
+      }
+    }
+    /* Share Button Pulse */
+    .pulse-btn {
+        background-color:#ffe44a !important; /* 强调色：亮黄色 */
+        color: #111 !important; /* 确保按钮文字在亮黄色背景下可见 */
+    }
+    @keyframes pulse{
+        0%,100%{transform:scale(1);background-color:#ffe44a}
+        50%{transform:scale(1.05);background-color:#FFFFE0} /* 脉冲颜色改为浅黄色 */
+    }
+
+  /* ---------------------------------------------------- */
+/* --- Split Images with Tilt Style --- */
+/* ---------------------------------------------------- */
+.split-images-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 18px;
+    flex-wrap: wrap; /* 确保在小屏幕上能换行 */
+}
+
+.image-container {
+    flex: 1 1 45%; /* 允许图片容器占据约 45% 宽度 */
+    min-width: 300px; /* 最小宽度限制 */
+    margin: 10px 0;
+    transition: transform 0.5s ease, box-shadow 0.3s ease;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+    border-radius: 8px;
+}
+
+.split-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+}
+
+/* 倾斜效果 */
+.tilt-left {
+    transform: rotate(-3deg);
+    margin-right: 20px;
+    /* 鼠标悬停时矫正 */
+    &:hover {
+        transform: rotate(0deg) scale(1.02);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+    }
+}
+
+.tilt-right {
+    transform: rotate(3deg);
+    margin-left: 20px;
+    /* 鼠标悬停时矫正 */
+    &:hover {
+        transform: rotate(0deg) scale(1.02);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+    }
+}
+
+.split-caption {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    color: #CCC; 
+    text-align: center;
+    padding: 10px 0 0;
+    font-style: italic;
+}
+
+/* 响应式调整 */
+@media (max-width: 650px) {
+    .split-images-wrapper {
+        flex-direction: column;
+        gap: 40px;
+    }
+    .image-container {
+        flex-basis: 100%;
+        min-width: unset;
+        transform: rotate(0deg) !important; /* 在小屏幕上取消倾斜 */
+        margin: 0 !important;
+        
+        &:hover {
+             transform: scale(1.0) !important; 
+        }
+    }
+}
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+        </div>
+  </header>
+  
+  <div style="max-width:1000px;margin:0 auto;padding:40px 18px 0;"> 
+    <h1 style="text-align:center;">Bleak Lights, Big City: Can Boston's Nightlife Come Back to Life?</h1>
+    <div class="byline" style="text-align:center; margin-bottom: 20px; margin-top: 40px; font-size: 20px;">By <strong>Hu Xinyue</strong>, <strong>Samantha Deras</strong>, and <strong>Rumsha Siddiqui</strong></div>
+    <div class="byline" style="text-align:center; margin-bottom: 20px;  font-size: 20px;">Posted Nov 9, 2025 </div>
+  </div>
+  <main>
+    <section class="panel" style="padding-bottom: 20px;">
+        <p class="fade-up" style="max-width:800px; margin:auto; text-align:center; font-style:italic; color:#c0bebe;">
+            Boston's nightlife is grappling with a perfect storm of red tape and high costs, from $200,000 liquor licenses to a decades-old happy hour ban. As young residents and students seek more affordable options, the city's social scene struggles to keep pace with rival hubs like New York.          </p>
+    </section>
+  </main>
+
+  
+  <main>
+    <section class="panel" id="sec-1">
+  <p class="fade-up">Let’s face it—Boston’s nightlife scene is bleak. With the combination of the infamous happy hour ban, high drink prices, unreliable public transit, and the suspension of alcohol sales after 2 a.m., there aren’t enough opportunities to enjoy bustling nightlife in the city. Plus, obtaining a liquor license is not an easy or affordable task, sometimes costing upwards of $600,000. 
+</p>
+  <p class="fade-up">Compared to other major U.S. cities like New York, Boston’s nightlife substantially lacks, and it is a tough reality, especially for newcomers in the college-student-dominated area. 
+  </p>
+  <section class="panel" id="sec-5" style="padding-top: 40px; padding-bottom: 40px; overflow: hidden;">
+    <div class="split-images-wrapper">
+        <div class="image-container tilt-left fade-up">
+            <img src="pic4.jpg" alt="A liquor bar setup with various bottles and a blender." class="split-img">
+            <p class="split-caption">Behind the bar: Ready for a night's work.</p>
+        </div>
+        <div class="image-container tilt-right fade-up">
+            <img src="pic5.jpg" alt="A large cocktail glass on a bar counter with bottles lit in the background." class="split-img">
+            <p class="split-caption">The finished product: An expensive Boston cocktail.</p>
+        </div>
+    </div>
+</section>
+  <p class="fade-up">Young people are seemingly unenthused by the nightlife the city has to offer.
+</p>
+  <p class="fade-up">
+    "Honestly, I don't enjoy a night out in Boston,” said 21 year old Zoë Clayton, a senior at Suffolk University. “At the surface it seems like there is so much to do, but when you're in it, the vibe is awful. The cover charges, drink prices, uber prices, and long wait times puts a damper on my excitement.”
+  </p>
+  <p class="fade-up">
+  A “puritanical” policy in Massachusetts limits the number of alcohol licenses in Boston to about 1,200, resulting in expensive sales of scarce permits. In most U.S. cities, this restriction is unheard of. Often, licenses must be purchased from another business at a price set by that business.
+  </p>
+ 
+  <section class="panel" id="sec-2">
+        <h3 class="fade-up" >Boston Liquor License Issuance Trends</h3>
+        <p class="fade-up" style="font-family:'Roboto', sans-serif; font-size:1.1rem; line-height:1.5; margin-bottom: 25px;">
+          Licensing peaked in 2013 and 2014, with over 2,400 licenses issued in those years combined. Issuances dropped substantially after 2015, averaging under 200 per year since 2020, possibly reflecting licensing stabilization or new review processes.
+        </p>
+        <iframe title="" aria-label="Line chart" id="datawrapper-chart-Fpx1f" src="https://datawrapper.dwcdn.net/Fpx1f/8/?dark=true" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="362" data-external="1"></iframe><script type="text/javascript">window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"]){var e=document.querySelectorAll("iframe");for(var t in a.data["datawrapper-height"])for(var r,i=0;r=e[i];i++)if(r.contentWindow===a.source){var d=a.data["datawrapper-height"][t]+"px";r.style.height=d}}});</script>        
+      </section>
+  <br>
+   <p class="fade-up">
+    “Boston is on a quota system, so theres a limited amount of alcoholic beverage licenses,” says Adam Barnosky, a shareholder at the firm and Chair of the Restaurant & Hospitality Practice Group in Massachusetts. “So, as the population has increased, and as tourism has increased, the licenses has stayed very much stagnant.” 
+  </p>
+  <p class="fade-up">
+    Due to the quota there is now a commodity market for licenses. Because of the scarcity of licenses, and given that you can’t just go to the city and get one, one of the few options is to buy a license from an existing license holder. This is why we see beer and wine licenses going for anywhere between $150,000 to $200,000. 
+
+  </p>
+  <p class="fade-up">
+    There have been an aggregation of licenses in places that were not developed ten or fifteen years ago. Many of those licenses came from the neighborhoods of Boston, such as Jamaica Plain, Dorchester, Roslindale, and Mattapan. 
+
+  </p>
+
+  <section class="panel" id="sec-2">
+        <h3 class="fade-up" >Geographic Distribution of Licenses in Boston</h3>
+        <p class="fade-up" style="font-family:'Roboto', sans-serif; font-size:1.1rem; line-height:1.5; margin-bottom: 25px;">
+        In Boston, the vast majority of liquor licenses cluster tightly in the central core, especially the Financial District, North End, and Back Bay; this leaves outer residential neighborhoods like Roxbury and Dorchester with a distinctly scattered and sparse distribution. </p>
+        <iframe title="" aria-label="Symbol map" id="datawrapper-chart-Xr8aM" 
+                src="https://datawrapper.dwcdn.net/Xr8aM/4/?dark=true" scrolling="no" frameborder="0" 
+                style="width: 0; min-width: 100% !important; border: none;" height="783" data-external="1">
+        </iframe>
+        <script type="text/javascript">
+        window.addEventListener("message", function(a) {
+            if (void 0 !== a.data["datawrapper-height"]) {
+                var e = document.querySelectorAll("iframe");
+                for (var t in a.data["datawrapper-height"]) {
+                    for (var r, i=0; r = e[i]; i++) {
+                        if (r.contentWindow === a.source) {
+                            var d = a.data["datawrapper-height"][t] + "px";
+                            r.style.height = d;
+                        }
+                    }
+                }
+            }
+        });
+        </script>
+      </section>
+  <br>
+
+
+  <p class="fade-up">
+    “This has created a dearth of licenses in those communities, meaning there's less access to business and less availability of licenses” says Barnosky.
+  </p>
+
+  <p class="fade-up">
+  It appears that the hassle to get a liquor license has caused a hurdle in the economic development of Boston’s nightlife. But it looks like Boston might be on the right track, and Barnosky agrees.
+  </p>
+  <p class="fade-up">
+  “I think that’s one of the first steps, is to give underserved portions of the community more access to the licenses.”
+  </p>
+
+  
+
+
+<p class="fade-up">
+ Last year, the state rolled out 225 new licenses. The vast majority were non-transferable, non-value licenses, specifically allocated for those communities. Businesses can apply for and get a license to use and the license does not create value. 
+</p>
+<p class="fade-up">
+ Additionally there is currently a new measure that allows businesses with a beer and wine license to convert that to an all alcoholic beverage license. Which allows people who bought into the system at a lower amount an opportunity to convert their license into one with a more significant use. Allowing them to attract different clientele. 
+</p>
+
+<section class="panel" id="sec-4">
+      <h3 class="fade-up">Boston’s liquor license policy evolution</h3>
+
+      <div id="scrollytelling-container">
+        <div id="scrollytelling-graphic">
+          <div id="chart-viz">
+            <h4 style="text-align:center; margin:30; color:#ffe44a; font-size: 20px;">Historical Timeline</h4>
+            <div class="viz-item" id="item-price">1920s–1930s</div>
+            <div class="viz-item" id="item-jobs">1930s–2014</div>
+            <div class="viz-item" id="item-equity">2014–2023</div>
+            <p class="viz-label">Scroll down to see the historical timeline!</p>
+          </div>
+        </div>
+
+        <div id="scrollytelling-text">
+          <section class="step" id="step-1">
+            <h4 style="color:#ffe44a;">Prohibition & Control</h4>
+            <p>After nationwide Prohibition ended in 1933, Massachusetts and Boston established a highly regulated liquor license system, enforcing strict state control and a citywide quota on licenses to manage public order and alcohol sales.
+            </p>
+          </section>
+
+          <section class="step" id="step-2">
+            <h4 style="color:#ffe44a;">Cap & Market Era</h4>
+            <p>Since the 1930s, Boston’s total number of liquor licenses was capped by state law. These licenses could be freely bought and sold, often reaching very high prices—sometimes over $400,000—making entry difficult for small businesses and underprivileged neighborhoods.
+            </p>
+          </section>
+
+          <section class="step" id="step-3">
+            <h4 style="color:#ffe44a;">Community Licenses Introduced</h4>
+            <p>In 2014, the state created 75 additional licenses, mostly “restricted” (non-transferable) and assigned to specific underserved neighborhoods to address historic inequities. These helped lower barriers for new, local, and minority-owned businesses to open in areas like Dorchester, Roxbury, and Mattapan.
+            </p>
+          </section>
+
+          <section class="step" id="step-4">
+            <h4 style="color:#ffe44a;">Expansion & Upgrading (2024–present)</h4>
+            <p>Starting in 2024, Massachusetts authorized 225 new licenses, most of which are non-transferable and tied to particular communities. Policy adjustments also allow some beer and wine licenses to be upgraded to full alcohol permits, increasing opportunities for small and existing businesses in diverse neighborhoods.
+            </p>
+          </section>
+        </div>
+      </div>
+    </section>
+<p class="fade-up">
+ Considering the difficulties in getting liquor licenses, it's no surprise that drinks on a night out in the city can really add up. Furthermore, the state's happy hour ban surely doesn’t seem to provide any incentive on a planned night out. 
+</p>
+<p class="fade-up">
+ These happy hour restrictions came in 1984, as Massachusetts saw to alleviate fatal drunk driving incidents.
+</p>
+<p class="fade-up">
+ In September 1983, 20 year old Kathleen Barry was killed in a drunk driving incident after her friends decided to take a joy ride following their win during a bar trivia night in Braintree. After the incident, in 1984, the state adopted the “Happy Hour regulation,” which placed several restrictions on bars and restaurants. It bans price cuts that last less than seven consecutive days, any “two for one” drink specials, games that award alcohol as prizes, and selling discounted alcoholic beverages for a certain period of time.
+</p>
+<p class="fade-up">
+ Ultimately, it looks like the complicated licensing market and the ban have shaped the current nightlife landscape in Boston today. When thinking about how Boston’s nightlife stands against its competitors such as New York and Chicago, it seems as if we really fall short.   
+</p>
+
+
+<section class="panel" id="sec-2">
+        <h3 class="fade-up" >Most Expensive Cities for Happy Hour in the U.S.</h3>
+        <p class="fade-up" style="font-family:'Roboto', sans-serif; font-size:1.1rem; line-height:1.5; margin-bottom: 25px;">
+         Accoridng to SimpleTexting's data survey, with cocktails ringing in at $17 a pop and the average appetizer selling for $13.31, it’s no shocker that NYC ranks at the top of our list with a whopping happy hour cost of $50.38. 
+        </p>
+       <div class="flourish-embed flourish-pictogram" data-src="visualisation/26195297"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/26195297/thumbnail" width="100%" alt="pictogram visualization" /></noscript></div>
+      </section>
+  <br>
+
+
+<p class="fade-up">
+The nightlife in other major cities like New York City is thriving and evolving. New York offers a more diverse late-night scene, including 24/7 options and more reliable public transit, running at later times.
+</p>
+<p class="fade-up">
+ Since 2020, the number of nightlife establishments in New York has grown by 16 percent. Plus, obtaining a liquor license is a lot easier and less costly, with licenses typically costing between $4,300 to $10,000.   
+</p>
+<p class="fade-up">
+ When seeing the realities of a lively nightlife scene in neighboring cities, it feels like young Bostonians are seriously missing out on something.    
+</p>
+<p class="fade-up">
+   Well, could happy hour be what Boston is missing? For some consumers, they think so.  
+</p>
+<p class="fade-up">
+ “A lot of us are college students who don’t want to break the bank in an effort to hang out with friends after a long week. My wallet definitely cries after a single night out,” laughed Clayton. “A chance to save some money while having fun would definitely get me out of the house more.”    
+</p>
+<p class="fade-up">
+Not only could it soften the blow to young people's wallets, but it could show a financial benefit to businesses as well.    
+</p>
+
+<img class="feature-image" src="pic2.jpg" alt="波士顿酒吧内部照片">
+  <div class="image-caption">Image: The high cost of entry makes a vibrant neighborhood nightlife difficult to establish.</div>
+
+
+<p class="fade-up">
+The hours of 5-7 pm are proven to be significant revenue generators and foot-traffic drivers, with restaurants earning around 60% of their average weekly sales from the surge in traffic during these post-work hours.     
+</p>
+
+
+<p class="fade-up">
+While a true happy hour is not possible to find in a Bostonian business, there are some restaurants and bars that have headed the call for happy hour like deals in the city.    
+</p>
+<p class="fade-up">
+ Barcelona Wine Bar – with multiple locations in Brookline, Cambridge and South End – offers $7 martinis and $4 beers from 4 to 6 pm weekly.    
+</p>
+<p class="fade-up">
+Rebel’s Guild in the Theater District offers $7 martinis on Mondays. 
+</p>
+<p class="fade-up">
+ South Boston’s Shy Bird offers $9 cocktails and $6 tallboys from 4-6 pm weekly.    
+</p>
+<p class="fade-up">
+ ​​Every Monday you can order $10 martinis at Petula’s in South Boston from 5pm to close.    
+</p>
+
+ 
+<p class="fade-up">
+ All these deals provide an incentive for young students to hit the town for a night with only a few bucks to spare. A nice change from the upwards of $100 expected to be spent on a single night socializing in the city.   
+</p>
+<img class="feature-image" src="pic3.png" alt="波士顿酒吧内部照片">
+
+<p class="fade-up">
+ “Petula’s was great. It felt so nice to go home knowing that I didn’t just spend a bunch of money I didn’t really have,” said Clayton. “I’ll have to check other businesses out and bring some friends with me.”    
+</p>
+<p class="fade-up">
+ Despite the appeal of a happy hour in the city, the foundation for real cultural, social, and economic change to our nightlife might lie at the legislative level.   
+</p>
+<p class="fade-up">
+ When asked where he sees the Boston nightlife going within the next 5 years, Barnosky seems hopeful, yet emphasizes that there is still work to be done.   
+</p>
+<p class="fade-up">
+ “A more streamlined approach to some of the municipal approvals that are required [would be helpful]. More permissive licensure, more flexible licensure, and continuing on the business friendly economic trajectory that Boston is already on.”   
+</p>
+<p class="fade-up">
+ For a city that is home to so many young people with an itch to find their place in the large social scene, Boston better show up soon.    
+</p>
+<p class="fade-up">
+ “Every city has its faults,” said Clayton. “I love Boston. I call it home, and no home is perfect. But if anything can make it even a little better, it's always worth a shot.”   
+</p>
+<p class="fade-up">
+    
+</p>
+
+</section>
+
+    
+  <footer>
+    <small style="color:#CCC;">&copy; 2025 Data Journalism Project | Boston Nightlife Economy</small>
+  </footer>
+
+  <div id="lightbox" style="position:fixed;inset:0;background:rgba(0,0,0,0.9);display:none;align-items:center;justify-content:center;z-index:999;padding:24px">
+    <img id="lightbox-img" src="" alt="expanded" style="max-width:92%;max-height:92%;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,0.6)">
+  </div>
+
+  <script>
+    // Register the ScrollTrigger plugin
+    gsap.registerPlugin(ScrollTrigger);
+
+    // --- Chart Data ---
+    const priceData = [150, 220, 280, 350, 410, 450]; // Prices in thousands USD
+    const priceLabels = ['2015', '2017', '2019', '2021', '2023', '2025'];
+    const distData = [75, 25]; // Downtown (75%), Periphery (25%)
+    const distLabels = ['Downtown/Core (75%)', 'Peripheral Areas (25%)'];
+
+    // --- Chart Drawing Helper Functions (Pure JS Canvas) ---
+    function drawLineChart(canvasId, labels, data) {
+      const canvas = document.getElementById(canvasId);
+      const ctx = canvas.getContext('2d');
+      const DPR = window.devicePixelRatio || 1;
+      const w = canvas.offsetWidth;
+      const h = canvas.offsetHeight;
+      
+      canvas.width = w * DPR;
+      canvas.height = h * DPR;
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+
+      const PADDING = 40;
+      const CHART_W = w - 2 * PADDING;
+      const CHART_H = h - 2 * PADDING;
+      const MAX_VAL = Math.max(...data) * 1.1; // 10% buffer
+      const MIN_VAL = Math.min(...data) * 0.9;
+      const RANGE = MAX_VAL - MIN_VAL;
+
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = '#FFFFFF'; // Text color: White
+      // 使用 Inter Sans-serif 字体用于图表标签，以保持清晰度
+      ctx.font = '12px Inter, sans-serif'; 
+
+      // Draw Y-axis grid lines and labels (Simplified)
+      for (let i = 0; i <= 4; i++) {
+        const y = PADDING + (CHART_H * i / 4);
+        const value = Math.round(MAX_VAL - (RANGE * i / 4));
+        ctx.beginPath();
+        ctx.moveTo(PADDING, y);
+        ctx.lineTo(w - PADDING, y);
+        ctx.strokeStyle = '#444'; // Grid color: Dark gray
+        ctx.stroke();
+        ctx.fillText(`$${value}K`, 5, y + 4);
+      }
+
+      // Draw X-axis labels
+      data.forEach((val, i) => {
+        const x = PADDING + (CHART_W * i / (data.length - 1));
+        ctx.fillText(labels[i], x - 15, h - 10);
+      });
+
+      // Draw Line
+      ctx.beginPath();
+      data.forEach((val, i) => {
+        const x = PADDING + (CHART_W * i / (data.length - 1));
+        const y = PADDING + CHART_H - ( (val - MIN_VAL) / RANGE * CHART_H );
+        if (i === 0) {
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+        }
+      });
+      ctx.strokeStyle = '#ffe44a'; // Line color: Bright Yellow
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      // Draw Dots
+      data.forEach((val, i) => {
+        const x = PADDING + (CHART_W * i / (data.length - 1));
+        const y = PADDING + CHART_H - ( (val - MIN_VAL) / RANGE * CHART_H );
+        ctx.beginPath();
+        ctx.arc(x, y, 4, 0, Math.PI * 2);
+        ctx.fillStyle = '#ffe44a'; // Dot fill: Bright Yellow
+        ctx.fill();
+        ctx.strokeStyle = '#111'; // Dot stroke: Background color (dark)
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      });
+    }
+
+    function drawBarChart(canvasId, labels, data) {
+        const canvas = document.getElementById(canvasId);
+        const ctx = canvas.getContext('2d');
+        const DPR = window.devicePixelRatio || 1;
+        const w = canvas.offsetWidth;
+        const h = canvas.offsetHeight;
+        
+        canvas.width = w * DPR;
+        canvas.height = h * DPR;
+        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+
+        const PADDING = 40;
+        const CHART_W = w - 2 * PADDING;
+        const CHART_H = h - 2 * PADDING;
+        const MAX_VAL = 100; // Max percentage
+
+        ctx.clearRect(0, 0, w, h);
+        ctx.fillStyle = '#FFFFFF'; // Text color: White
+        // 使用 Inter Sans-serif 字体用于图表标签
+        ctx.font = '14px Inter, sans-serif';
+
+        // Draw Bars
+        const barWidth = 60;
+        const spacing = (CHART_W - (data.length * barWidth)) / (data.length + 1);
+
+        data.forEach((val, i) => {
+            const x = PADDING + spacing + i * (barWidth + spacing);
+            const barH = val / MAX_VAL * CHART_H;
+            const y = PADDING + CHART_H - barH;
+
+            // Bar color: Downtown (Bright Yellow), Periphery (Gray)
+            ctx.fillStyle = i === 0 ? '#ffe44a' : '#777';
+
+            ctx.fillRect(x, y, barWidth, barH);
+
+            // Label at the bottom
+            ctx.fillStyle = '#FFFFFF'; // Label at the bottom: White
+            ctx.fillText(labels[i].split(' ')[0], x + barWidth / 2 - (labels[i].split(' ')[0].length * 3), h - 10);
+
+            // Value label above bar
+            ctx.fillStyle = '#ffe44a'; // Value label above bar: Bright Yellow
+            ctx.fillText(`${val}%`, x + barWidth / 2 - 10, y - 10);
+        });
+    }
+
+    // --- Initialization and Event Handlers ---
+    function initializeCharts() {
+      // 图表 1 (Line Chart is not explicitly in the HTML but keeping the data/function)
+      // drawLineChart('priceTrendChart', priceLabels, priceData); 
+
+      // 图表 2
+      drawBarChart('distributionChart', distLabels, distData);
+    }
+
+    window.addEventListener('load', initializeCharts);
+    window.addEventListener('resize', initializeCharts);
+
+
+    // --- 1. General Intersection Animations (for fade-in of non-scrollytelling elements) ---
+    const io=new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){e.target.classList.add('visible');}
+      });
+    },{threshold:0.18});
+    document.querySelectorAll('.fade-up,.float-left,.float-right,.reveal-bottom').forEach(n=>io.observe(n));
+
+
+    // --- 2. Pinning and Step-based Animation (Section 4) ---
+    const steps = gsap.utils.toArray('.step');
+    const vizItems = gsap.utils.toArray('.viz-item');
+
+    // Create the main ScrollTrigger to PIN the graphic container
+    ScrollTrigger.create({
+      trigger: '#scrollytelling-container',
+      start: 'top top',
+      end: 'bottom bottom',
+      pin: '#scrollytelling-graphic', // Pin the left column
+      pinType: "fixed",
+      // ** 保持 pinSpacing 默认行为 (true)，以解决滚动到末尾突然下移的问题 **
+    });
+
+    // 映射步骤和对应的图表元素 ID
+    const vizMap = ['#item-price', '#item-jobs', '#item-equity', null]; // null for step-4 (reset state)
+
+    // 创建一个函数来执行图表元素的突出动画
+    function highlightVizItem(targetItem) {
+        // 1. 重置所有项目 (动画开始前的基础状态)
+        gsap.to('.viz-item', { 
+            scale: 0.9, 
+            backgroundColor: '#333', 
+            color: '#FFFFFF', 
+            duration: 0.3 
+        });
+
+        if (targetItem) {
+            // 2. 突出显示当前步骤对应的项目
+            gsap.to(targetItem, { 
+                scale: 1.15, 
+                backgroundColor: '#ffe44a', // 亮黄色
+                color: '#111', 
+                duration: 0.5, 
+                ease: 'back.out(1.7)' 
+            });
+        } else {
+             // 3. 第四步: Path to Reform (显示所有项目)
+             gsap.to('.viz-item', { 
+                scale: 1.0, 
+                backgroundColor: '#444', 
+                color: '#FFFFFF', 
+                duration: 0.5 
+            });
+        }
+    }
+
+
+    // Create a ScrollTrigger for each text step
+    steps.forEach((step, i) => {
+        ScrollTrigger.create({
+            trigger: step,
+            start: 'top center', // 步骤顶部到达视口中心时激活
+            end: 'bottom center', // 步骤底部离开视口中心时取消激活
+            toggleClass: 'active', // 步骤激活效果 (即时发生)
+            
+            // ** 关键修正：在进入触发范围时，立即执行动画 **
+            onEnter: () => {
+                highlightVizItem(vizMap[i]);
+            },
+            
+            // ** 关键修正：在向上滚动退出触发范围时，反向执行动画到上一个步骤的状态 **
+            onLeaveBack: () => {
+                // 如果不是第一个步骤，则高亮上一个步骤的元素
+                if (i > 0) {
+                    highlightVizItem(vizMap[i - 1]);
+                } else {
+                    // 如果是第一个步骤，则重置所有元素到初始状态
+                    gsap.to('.viz-item', { scale: 0.9, backgroundColor: '#333', color: '#FFFFFF', duration: 0.3 });
+                }
+            },
+            
+            // 可选：在向下滚动退出时（进入下一个步骤）可以添加清理逻辑
+            onLeave: () => {
+                // 如果是最后一个步骤，当它离开时，可以做一次总重置，以防 onEnter 逻辑被下一个步骤覆盖
+                if (i === steps.length - 1) {
+                    // 通常不需要，因为下一个步骤的 onEnter 会自动处理，但可作为最终清理
+                }
+            }
+        });
+    });
+
+
+    // --- 3. Scrubbing Text Stack (Section 5) ---
+    gsap.utils.toArray('.scrub-text').forEach((el, i) => {
+      gsap.to(el, {
+        y: (i * 30) + 'vh',
+        rotation: (i % 2 === 0 ? 3 : -3),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.scrub-wrapper',
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1.5 - (i * 0.4),
+        }
+      });
+    });
+
+    // --- 4. Utility Functions (Share, Lightbox) ---
+
+    // Utility: Share functionality
+    function shareArticle(){
+      const title = document.title;
+      const text = 'Data Analysis: Boston\'s Liquor License Cap';
+      const url = location.href;
+
+      if(navigator.share){
+        navigator.share({ title, text, url }).catch(()=>console.log('Share failed or cancelled.'));
+      }else{
+        console.log('Using fallback: URL copied to clipboard (Simulated).');
+        navigator.clipboard.writeText(url).then(() => {
+            console.log('Link copied!');
+        });
+      }
+    }
+    document.getElementById('shareBtn').addEventListener('click', shareArticle);
+
+    // Utility: Lightbox (大图模式)
+    function openLightbox(src){
+      const lb=document.getElementById('lightbox');
+      document.getElementById('lightbox-img').src=src;
+      lb.style.display='flex';
+      lb.addEventListener('click', closeLightbox);
+    }
+    function closeLightbox(){
+      document.getElementById('lightbox').style.display='none';
+    }
+
+    // Utility: Share button pulse animation
+    const shareBtn=document.getElementById('shareBtn');
+    const observer=new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+          if(e.isIntersecting) {
+            shareBtn.style.animation='pulse 2.2s infinite';
+            shareBtn.classList.add('pulse-btn');
+          }
+      });
+    },{threshold:0.5});
+    observer.observe(shareBtn);
+  </script>
+</body>
+</html>
