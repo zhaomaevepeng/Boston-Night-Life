@@ -13,48 +13,45 @@
     /* --- Base Styles (Dark Mode) --- */
     /* ---------------------------------------------------- */
     *{box-sizing:border-box}
-    /* 字体更新：使用 Georgia/Times New Roman 衬线字体，模仿 NYT 风格 */
     html,body{
         height:100%;
         margin:0;
         font-family:Georgia, 'Times New Roman', serif;
-        color:#FFFFFF; /* 全局文字：白色 */
-        background:#101010; /* 全局背景：深色 */
+        color:#FFFFFF;
+        background:#101010;
         scroll-behavior:smooth;
     }
-    a{color:#87CEFA;text-decoration:none} /* 链接色：浅蓝色 */
+    a{color:#87CEFA;text-decoration:none}
     h1{
         font-family:'Merriweather', Georgia, serif;
         font-size:clamp(32px,5vw,56px);
         margin:60px 0 20px;
         line-height:1.4;
         font-weight:700;
-        color:#ffe44a; /* H1 标题色：亮黄色 */
+        color:#ffe44a;
     }
     h3{
         font-family:'Merriweather', Georgia, serif;
         font-size:clamp(22px, 3vw, 28px); 
         font-weight:600; 
-        color:#ffffff; /* H3 标题色：亮黄色 */
+        color:#ffffff;
         margin-bottom:20px; 
-        border-left: 4px solid #ffe44a; /* 强调色：亮黄色 */
+        border-left: 4px solid #ffe44a;
         padding-left: 10px;
     }
-    h4{font-family:Georgia, 'Times New Roman', serif; font-weight:700; color:#ffe44a; margin-bottom:10px;} /* H4 小标题色：亮黄色 */
+    h4{font-family:Georgia, 'Times New Roman', serif; font-weight:700; color:#ffe44a; margin-bottom:10px;}
     p{line-height:1.8; margin-bottom:1.4rem; font-size:1.4rem;}
 
     /* --- Page layout --- */
     header.hero{
       height:90vh;min-height:420px;display:flex;align-items:center;justify-content:center;color:white;text-align:center;position:relative;overflow:hidden;
-      /* 已更新: 标题背景图使用本地文件 pic1.jpg */
       background-image:url('pic1.jpg'); 
       background-size:cover;background-position:center center;
     }
-    header.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.4), rgba(0,0,0,0.7));z-index:1;} /* 保持深色叠加 */
+    header.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.4), rgba(0,0,0,0.7));z-index:1;}
     .hero-inner{position:relative;z-index:2;max-width:900px;padding:40px}
-    .byline{opacity:.95;font-weight:500;font-size:1rem;margin-top:10px; font-family: 'Inter', sans-serif; color: #CCC;} /* byline 颜色调整 */
+    .byline{opacity:.95;font-weight:500;font-size:1rem;margin-top:10px; font-family: 'Inter', sans-serif; color: #CCC;}
 
-    /* 新增：特色照片样式 */
     .feature-image {
         width: 100%;
         max-width: 1000px;
@@ -62,13 +59,12 @@
         margin: 20px auto 40px auto;
         display: block;
         object-fit: cover;
-       
-        box-shadow: 0 5px 15px rgba(0,0,0,0.3); /* 调整阴影以适应深色背景 */
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     }
     .image-caption {
         font-family: 'Inter', sans-serif;
         font-size: 1.1rem;
-        color: #CCC; /* 说明文字颜色调整 */
+        color: #CCC;
         text-align: right;
         max-width: 1000px;
         margin: -25px auto 40px auto;
@@ -80,7 +76,7 @@
         max-width:1000px;
         margin:0 auto;
         padding:40px 18px 30px; 
-        background:transparent; /* main背景设为透明，继承body背景 */
+        background:transparent;
     }
     section.panel{padding:20px 0;}
     .container{display:flex;gap:40px;align-items:flex-start}
@@ -88,8 +84,8 @@
 
     /* --- Data Viz Card Style --- */
     .data-card {
-        background: #222; /* 图表卡片背景改为深色 */
-        border: 1px solid #444; /* 边框改为深色 */
+        background: #222;
+        border: 1px solid #444;
         padding: 20px;
         border-radius: 8px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.3);
@@ -104,20 +100,19 @@
     #scrollytelling-container {
       display: flex;
       position: relative;
-      min-height: 400vh;
-      padding-top: 50px;
+      padding-top: 0;
+      margin-top: 40px;
     }
     /* The Pinned Graphic (Chart 3) */
     #scrollytelling-graphic {
       position: relative;
-      top: 10vh;
       height: 80vh;
       width: 45%;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: #222; /* 图形容器背景改为深色 */
+      background: #222;
       border-radius: 8px;
       border: 1px solid #444;
       box-shadow: 0 10px 40px rgba(0,0,0,0.3);
@@ -127,7 +122,7 @@
     #chart-viz {
         width: 100%;
         height: 100%;
-        background: #222; /* 图表内部背景改为深色 */
+        background: #222;
         border-radius: 8px;
         display: flex;
         align-items: center;
@@ -138,23 +133,22 @@
     .viz-item {
         padding: 12px 24px;
         margin: 8px;
-        background: #333; /* 初始项目背景改为深色 */
-        color: #FFFFFF; /* 初始文字改为白色 */
+        background: #333;
+        color: #FFFFFF;
         border-radius: 4px;
         width: 250px;
         text-align: center;
         font-weight: 600;
-        transform: scale(0.9); /* Initial GSAP state */
+        transform: scale(0.9);
         border: 1px solid #444;
         transition: background-color 0.3s, color 0.3s;
     }
-    /* 突出显示状态的颜色 */
     .viz-item-highlight {
-        background: #ffe44a; /* 强调色：亮黄色 */
-        color: #111; /* 突出时文字改为深色 */
+        background: #ffe44a;
+        color: #111;
     }
     .viz-label {
-        color: #CCC; /* 标签文字颜色 */
+        color: #CCC;
         font-size: 0.9rem;
         margin-top: 10px;
     }
@@ -167,17 +161,16 @@
     .step {
       padding: 40px;
       margin-bottom: 60vh;
-      background: #1e1e1e; /* 步骤卡片背景改为深色 */
-      border-left: 6px solid #444; /* 初始边框颜色 */
+      background: #1e1e1e;
+      border-left: 6px solid #444;
       border-radius: 4px;
       opacity: 0.4;
       transition: opacity 0.5s, border-color 0.5s;
     }
     .step.active {
       opacity: 1;
-      border-left-color: #ffe44a; /* 强调色与图表统一：亮黄色 */
+      border-left-color: #ffe44a;
     }
-    /* 确保步骤内的标题也使用亮黄色 */
     .step h4 { color: #ffe44a !important; font-size:20px;} 
 
     /* ---------------------------------------------------- */
@@ -192,7 +185,7 @@
       align-items: center;
       overflow: hidden;
       margin: 80px 0;
-      background: #1e1e1e; /* 浅色背景更新闻化为深色 */
+      background: #1e1e1e;
     }
     .scrub-text {
       position: absolute;
@@ -202,7 +195,7 @@
       font-size: clamp(2rem, 6vw, 5rem);
       font-weight: 700;
       opacity: 0.9;
-      color: #ffe44a; /* 已统一颜色为强调色：亮黄色 */
+      color: #ffe44a;
       font-family: 'Times New Roman', Georgia, serif;
     }
 
@@ -214,7 +207,7 @@
     .split{display:flex;gap:40px;align-items:center}
     .split .imgwrap{flex:1;min-width:280px}
     .split img{width:100%;border-radius:8px;display:block;box-shadow:0 5px 15px rgba(0,0,0,0.3)}
-    footer{padding:40px 18px;text-align:center;color:#CCC;} /* 页脚文字颜色调整 */
+    footer{padding:40px 18px;text-align:center;color:#CCC;}
 
     @media (max-width:960px){
       .container, .split, #scrollytelling-container{flex-direction:column}
@@ -236,90 +229,85 @@
     }
     /* Share Button Pulse */
     .pulse-btn {
-        background-color:#ffe44a !important; /* 强调色：亮黄色 */
-        color: #111 !important; /* 确保按钮文字在亮黄色背景下可见 */
+        background-color:#ffe44a !important;
+        color: #111 !important;
     }
     @keyframes pulse{
         0%,100%{transform:scale(1);background-color:#ffe44a}
-        50%{transform:scale(1.05);background-color:#FFFFE0} /* 脉冲颜色改为浅黄色 */
+        50%{transform:scale(1.05);background-color:#FFFFE0}
     }
 
-  /* ---------------------------------------------------- */
-/* --- Split Images with Tilt Style --- */
-/* ---------------------------------------------------- */
-.split-images-wrapper {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    max-width: 1000px;
-    margin: 40px auto;
-    padding: 0 18px;
-    flex-wrap: wrap; /* 确保在小屏幕上能换行 */
-}
-
-.image-container {
-    flex: 1 1 45%; /* 允许图片容器占据约 45% 宽度 */
-    min-width: 300px; /* 最小宽度限制 */
-    margin: 10px 0;
-    transition: transform 0.5s ease, box-shadow 0.3s ease;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
-    border-radius: 8px;
-}
-
-.split-img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 8px;
-}
-
-/* 倾斜效果 */
-.tilt-left {
-    transform: rotate(-3deg);
-    margin-right: 20px;
-    /* 鼠标悬停时矫正 */
-    &:hover {
-        transform: rotate(0deg) scale(1.02);
-        box-shadow: 0 10px 30px rgba(0,0,0,0.7);
-    }
-}
-
-.tilt-right {
-    transform: rotate(3deg);
-    margin-left: 20px;
-    /* 鼠标悬停时矫正 */
-    &:hover {
-        transform: rotate(0deg) scale(1.02);
-        box-shadow: 0 10px 30px rgba(0,0,0,0.7);
-    }
-}
-
-.split-caption {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.95rem;
-    color: #CCC; 
-    text-align: center;
-    padding: 10px 0 0;
-    font-style: italic;
-}
-
-/* 响应式调整 */
-@media (max-width: 650px) {
+    /* ---------------------------------------------------- */
+    /* --- Split Images with Tilt Style --- */
+    /* ---------------------------------------------------- */
     .split-images-wrapper {
-        flex-direction: column;
-        gap: 40px;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        max-width: 1000px;
+        margin: 40px auto;
+        padding: 0 18px;
+        flex-wrap: wrap;
     }
+
     .image-container {
-        flex-basis: 100%;
-        min-width: unset;
-        transform: rotate(0deg) !important; /* 在小屏幕上取消倾斜 */
-        margin: 0 !important;
-        
-        &:hover {
-             transform: scale(1.0) !important; 
+        flex: 1 1 45%;
+        min-width: 300px;
+        margin: 10px 0;
+        transition: transform 0.5s ease, box-shadow 0.3s ease;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+        border-radius: 8px;
+    }
+
+    .split-img {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 8px;
+    }
+
+    .tilt-left {
+        transform: rotate(-3deg);
+        margin-right: 20px;
+    }
+    .tilt-left:hover {
+        transform: rotate(0deg) scale(1.02);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+    }
+
+    .tilt-right {
+        transform: rotate(3deg);
+        margin-left: 20px;
+    }
+    .tilt-right:hover {
+        transform: rotate(0deg) scale(1.02);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+    }
+
+    .split-caption {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.95rem;
+        color: #CCC; 
+        text-align: center;
+        padding: 10px 0 0;
+        font-style: italic;
+    }
+
+    @media (max-width: 650px) {
+        .split-images-wrapper {
+            flex-direction: column;
+            gap: 40px;
+        }
+        .image-container {
+            flex-basis: 100%;
+            min-width: unset;
+            transform: rotate(0deg) !important;
+            margin: 0 !important;
+        }
+        .image-container:hover {
+            transform: scale(1.0) !important; 
         }
     }
-}
   </style>
 </head>
 <body>
@@ -336,7 +324,8 @@
   <main>
     <section class="panel" style="padding-bottom: 20px;">
         <p class="fade-up" style="max-width:800px; margin:auto; text-align:center; font-style:italic; color:#c0bebe;">
-            Boston's nightlife is grappling with a perfect storm of red tape and high costs, from $200,000 liquor licenses to a decades-old happy hour ban. As young residents and students seek more affordable options, the city's social scene struggles to keep pace with rival hubs like New York.          </p>
+            Boston's nightlife is grappling with a perfect storm of red tape and high costs, from $200,000 liquor licenses to a decades-old happy hour ban. As young residents and students seek more affordable options, the city's social scene struggles to keep pace with rival hubs like New York.
+        </p>
     </section>
   </main>
 
@@ -597,6 +586,7 @@ Rebel’s Guild in the Theater District offers $7 martinis on Mondays.
     // --- Chart Drawing Helper Functions (Pure JS Canvas) ---
     function drawLineChart(canvasId, labels, data) {
       const canvas = document.getElementById(canvasId);
+      if (!canvas) return;
       const ctx = canvas.getContext('2d');
       const DPR = window.devicePixelRatio || 1;
       const w = canvas.offsetWidth;
@@ -609,34 +599,30 @@ Rebel’s Guild in the Theater District offers $7 martinis on Mondays.
       const PADDING = 40;
       const CHART_W = w - 2 * PADDING;
       const CHART_H = h - 2 * PADDING;
-      const MAX_VAL = Math.max(...data) * 1.1; // 10% buffer
+      const MAX_VAL = Math.max(...data) * 1.1;
       const MIN_VAL = Math.min(...data) * 0.9;
       const RANGE = MAX_VAL - MIN_VAL;
 
       ctx.clearRect(0, 0, w, h);
-      ctx.fillStyle = '#FFFFFF'; // Text color: White
-      // 使用 Inter Sans-serif 字体用于图表标签，以保持清晰度
+      ctx.fillStyle = '#FFFFFF';
       ctx.font = '12px Inter, sans-serif'; 
 
-      // Draw Y-axis grid lines and labels (Simplified)
       for (let i = 0; i <= 4; i++) {
         const y = PADDING + (CHART_H * i / 4);
         const value = Math.round(MAX_VAL - (RANGE * i / 4));
         ctx.beginPath();
         ctx.moveTo(PADDING, y);
         ctx.lineTo(w - PADDING, y);
-        ctx.strokeStyle = '#444'; // Grid color: Dark gray
+        ctx.strokeStyle = '#444';
         ctx.stroke();
         ctx.fillText(`$${value}K`, 5, y + 4);
       }
 
-      // Draw X-axis labels
       data.forEach((val, i) => {
         const x = PADDING + (CHART_W * i / (data.length - 1));
         ctx.fillText(labels[i], x - 15, h - 10);
       });
 
-      // Draw Line
       ctx.beginPath();
       data.forEach((val, i) => {
         const x = PADDING + (CHART_W * i / (data.length - 1));
@@ -647,19 +633,18 @@ Rebel’s Guild in the Theater District offers $7 martinis on Mondays.
           ctx.lineTo(x, y);
         }
       });
-      ctx.strokeStyle = '#ffe44a'; // Line color: Bright Yellow
+      ctx.strokeStyle = '#ffe44a';
       ctx.lineWidth = 3;
       ctx.stroke();
 
-      // Draw Dots
       data.forEach((val, i) => {
         const x = PADDING + (CHART_W * i / (data.length - 1));
         const y = PADDING + CHART_H - ( (val - MIN_VAL) / RANGE * CHART_H );
         ctx.beginPath();
         ctx.arc(x, y, 4, 0, Math.PI * 2);
-        ctx.fillStyle = '#ffe44a'; // Dot fill: Bright Yellow
+        ctx.fillStyle = '#ffe44a';
         ctx.fill();
-        ctx.strokeStyle = '#111'; // Dot stroke: Background color (dark)
+        ctx.strokeStyle = '#111';
         ctx.lineWidth = 2;
         ctx.stroke();
       });
@@ -667,6 +652,7 @@ Rebel’s Guild in the Theater District offers $7 martinis on Mondays.
 
     function drawBarChart(canvasId, labels, data) {
         const canvas = document.getElementById(canvasId);
+        if (!canvas) return;
         const ctx = canvas.getContext('2d');
         const DPR = window.devicePixelRatio || 1;
         const w = canvas.offsetWidth;
@@ -679,14 +665,12 @@ Rebel’s Guild in the Theater District offers $7 martinis on Mondays.
         const PADDING = 40;
         const CHART_W = w - 2 * PADDING;
         const CHART_H = h - 2 * PADDING;
-        const MAX_VAL = 100; // Max percentage
+        const MAX_VAL = 100;
 
         ctx.clearRect(0, 0, w, h);
-        ctx.fillStyle = '#FFFFFF'; // Text color: White
-        // 使用 Inter Sans-serif 字体用于图表标签
+        ctx.fillStyle = '#FFFFFF';
         ctx.font = '14px Inter, sans-serif';
 
-        // Draw Bars
         const barWidth = 60;
         const spacing = (CHART_W - (data.length * barWidth)) / (data.length + 1);
 
@@ -695,27 +679,19 @@ Rebel’s Guild in the Theater District offers $7 martinis on Mondays.
             const barH = val / MAX_VAL * CHART_H;
             const y = PADDING + CHART_H - barH;
 
-            // Bar color: Downtown (Bright Yellow), Periphery (Gray)
             ctx.fillStyle = i === 0 ? '#ffe44a' : '#777';
-
             ctx.fillRect(x, y, barWidth, barH);
 
-            // Label at the bottom
-            ctx.fillStyle = '#FFFFFF'; // Label at the bottom: White
+            ctx.fillStyle = '#FFFFFF';
             ctx.fillText(labels[i].split(' ')[0], x + barWidth / 2 - (labels[i].split(' ')[0].length * 3), h - 10);
 
-            // Value label above bar
-            ctx.fillStyle = '#ffe44a'; // Value label above bar: Bright Yellow
+            ctx.fillStyle = '#ffe44a';
             ctx.fillText(`${val}%`, x + barWidth / 2 - 10, y - 10);
         });
     }
 
-    // --- Initialization and Event Handlers ---
     function initializeCharts() {
-      // 图表 1 (Line Chart is not explicitly in the HTML but keeping the data/function)
-      // drawLineChart('priceTrendChart', priceLabels, priceData); 
-
-      // 图表 2
+      // drawLineChart('priceTrendChart', priceLabels, priceData);
       drawBarChart('distributionChart', distLabels, distData);
     }
 
@@ -723,7 +699,7 @@ Rebel’s Guild in the Theater District offers $7 martinis on Mondays.
     window.addEventListener('resize', initializeCharts);
 
 
-    // --- 1. General Intersection Animations (for fade-in of non-scrollytelling elements) ---
+    // --- 1. General Intersection Animations ---
     const io=new IntersectionObserver((entries)=>{
       entries.forEach(e=>{
         if(e.isIntersecting){e.target.classList.add('visible');}
@@ -736,22 +712,21 @@ Rebel’s Guild in the Theater District offers $7 martinis on Mondays.
     const steps = gsap.utils.toArray('.step');
     const vizItems = gsap.utils.toArray('.viz-item');
 
-    // Create the main ScrollTrigger to PIN the graphic container
+    // Pin the left graphic when entering the "Boston’s liquor license policy evolution" section
     ScrollTrigger.create({
       trigger: '#scrollytelling-container',
-      start: 'top top',
+      // When the container's top hits an imaginary line 120px from the top of the viewport
+      start: 'top 120px',         // ⬅️ this is the key: pin at 120px down, not 0
+      endTrigger: '#sec-4',       // end based on the full section
       end: 'bottom bottom',
-      pin: '#scrollytelling-graphic', // Pin the left column
-      pinType: "fixed",
-      // ** 保持 pinSpacing 默认行为 (true)，以解决滚动到末尾突然下移的问题 **
+      pin: '#scrollytelling-graphic',
+      pinSpacing: true,
+      anticipatePin: 1
     });
 
-    // 映射步骤和对应的图表元素 ID
-    const vizMap = ['#item-price', '#item-jobs', '#item-equity', null]; // null for step-4 (reset state)
+    const vizMap = ['#item-price', '#item-jobs', '#item-equity', null];
 
-    // 创建一个函数来执行图表元素的突出动画
     function highlightVizItem(targetItem) {
-        // 1. 重置所有项目 (动画开始前的基础状态)
         gsap.to('.viz-item', { 
             scale: 0.9, 
             backgroundColor: '#333', 
@@ -760,17 +735,15 @@ Rebel’s Guild in the Theater District offers $7 martinis on Mondays.
         });
 
         if (targetItem) {
-            // 2. 突出显示当前步骤对应的项目
             gsap.to(targetItem, { 
                 scale: 1.15, 
-                backgroundColor: '#ffe44a', // 亮黄色
+                backgroundColor: '#ffe44a',
                 color: '#111', 
                 duration: 0.5, 
                 ease: 'back.out(1.7)' 
             });
         } else {
-             // 3. 第四步: Path to Reform (显示所有项目)
-             gsap.to('.viz-item', { 
+            gsap.to('.viz-item', { 
                 scale: 1.0, 
                 backgroundColor: '#444', 
                 color: '#FFFFFF', 
@@ -779,36 +752,28 @@ Rebel’s Guild in the Theater District offers $7 martinis on Mondays.
         }
     }
 
-
-    // Create a ScrollTrigger for each text step
+    // Each step becomes active when its center hits the viewport center
     steps.forEach((step, i) => {
         ScrollTrigger.create({
             trigger: step,
-            start: 'top center', // 步骤顶部到达视口中心时激活
-            end: 'bottom center', // 步骤底部离开视口中心时取消激活
-            toggleClass: 'active', // 步骤激活效果 (即时发生)
+            start: 'center center',   // center of card hits center of viewport
+            end: 'bottom center',
+            toggleClass: 'active',
             
-            // ** 关键修正：在进入触发范围时，立即执行动画 **
             onEnter: () => {
                 highlightVizItem(vizMap[i]);
             },
             
-            // ** 关键修正：在向上滚动退出触发范围时，反向执行动画到上一个步骤的状态 **
             onLeaveBack: () => {
-                // 如果不是第一个步骤，则高亮上一个步骤的元素
                 if (i > 0) {
                     highlightVizItem(vizMap[i - 1]);
                 } else {
-                    // 如果是第一个步骤，则重置所有元素到初始状态
-                    gsap.to('.viz-item', { scale: 0.9, backgroundColor: '#333', color: '#FFFFFF', duration: 0.3 });
-                }
-            },
-            
-            // 可选：在向下滚动退出时（进入下一个步骤）可以添加清理逻辑
-            onLeave: () => {
-                // 如果是最后一个步骤，当它离开时，可以做一次总重置，以防 onEnter 逻辑被下一个步骤覆盖
-                if (i === steps.length - 1) {
-                    // 通常不需要，因为下一个步骤的 onEnter 会自动处理，但可作为最终清理
+                    gsap.to('.viz-item', { 
+                        scale: 0.9, 
+                        backgroundColor: '#333', 
+                        color: '#FFFFFF', 
+                        duration: 0.3 
+                    });
                 }
             }
         });
@@ -831,8 +796,6 @@ Rebel’s Guild in the Theater District offers $7 martinis on Mondays.
     });
 
     // --- 4. Utility Functions (Share, Lightbox) ---
-
-    // Utility: Share functionality
     function shareArticle(){
       const title = document.title;
       const text = 'Data Analysis: Boston\'s Liquor License Cap';
@@ -847,9 +810,21 @@ Rebel’s Guild in the Theater District offers $7 martinis on Mondays.
         });
       }
     }
-    document.getElementById('shareBtn').addEventListener('click', shareArticle);
 
-    // Utility: Lightbox (大图模式)
+    const shareBtn=document.getElementById('shareBtn');
+    if (shareBtn) {
+      shareBtn.addEventListener('click', shareArticle);
+      const observer=new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{
+            if(e.isIntersecting) {
+              shareBtn.style.animation='pulse 2.2s infinite';
+              shareBtn.classList.add('pulse-btn');
+            }
+        });
+      },{threshold:0.5});
+      observer.observe(shareBtn);
+    }
+
     function openLightbox(src){
       const lb=document.getElementById('lightbox');
       document.getElementById('lightbox-img').src=src;
@@ -859,18 +834,6 @@ Rebel’s Guild in the Theater District offers $7 martinis on Mondays.
     function closeLightbox(){
       document.getElementById('lightbox').style.display='none';
     }
-
-    // Utility: Share button pulse animation
-    const shareBtn=document.getElementById('shareBtn');
-    const observer=new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{
-          if(e.isIntersecting) {
-            shareBtn.style.animation='pulse 2.2s infinite';
-            shareBtn.classList.add('pulse-btn');
-          }
-      });
-    },{threshold:0.5});
-    observer.observe(shareBtn);
   </script>
 </body>
 </html>
