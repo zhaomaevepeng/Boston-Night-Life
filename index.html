@@ -105,7 +105,8 @@
     }
     /* The Pinned Graphic (Chart 3) */
     #scrollytelling-graphic {
-      position: relative;
+      position: sticky;      /* <- instead of relative + GSAP pin */
+      top: 120px;            /* distance from top of viewport (under the title) */
       height: 80vh;
       width: 45%;
       display: flex;
@@ -713,16 +714,7 @@ Rebel’s Guild in the Theater District offers $7 martinis on Mondays.
     const vizItems = gsap.utils.toArray('.viz-item');
 
     // Pin the left graphic when entering the "Boston’s liquor license policy evolution" section
-    ScrollTrigger.create({
-      trigger: '#scrollytelling-container',
-      // When the container's top hits an imaginary line 120px from the top of the viewport
-      start: 'top 120px',         // ⬅️ this is the key: pin at 120px down, not 0
-      endTrigger: '#sec-4',       // end based on the full section
-      end: 'bottom bottom',
-      pin: '#scrollytelling-graphic',
-      pinSpacing: true,
-      anticipatePin: 1
-    });
+   
 
     const vizMap = ['#item-price', '#item-jobs', '#item-equity', null];
 
@@ -754,30 +746,33 @@ Rebel’s Guild in the Theater District offers $7 martinis on Mondays.
 
     // Each step becomes active when its center hits the viewport center
     steps.forEach((step, i) => {
-        ScrollTrigger.create({
-            trigger: step,
-            start: 'center center',   // center of card hits center of viewport
-            end: 'bottom center',
-            toggleClass: 'active',
-            
-            onEnter: () => {
-                highlightVizItem(vizMap[i]);
-            },
-            
-            onLeaveBack: () => {
-                if (i > 0) {
-                    highlightVizItem(vizMap[i - 1]);
-                } else {
-                    gsap.to('.viz-item', { 
-                        scale: 0.9, 
-                        backgroundColor: '#333', 
-                        color: '#FFFFFF', 
-                        duration: 0.3 
-                    });
-                }
-            }
-        });
+      ScrollTrigger.create({
+        trigger: step,
+        // When the TOP of the step hits the same horizontal line
+        // as the sticky graphic (120px from viewport top)
+        start: 'top top+=120',        // ⬅️ sync to sticky offset
+        end: 'bottom top+=120',       // ⬅️ active while it spans that line
+        toggleClass: 'active',
+        
+        onEnter: () => {
+          highlightVizItem(vizMap[i]);
+        },
+        
+        onLeaveBack: () => {
+          if (i > 0) {
+            highlightVizItem(vizMap[i - 1]);
+          } else {
+            gsap.to('.viz-item', { 
+              scale: 0.9, 
+              backgroundColor: '#333', 
+              color: '#FFFFFF', 
+              duration: 0.3 
+            });
+          }
+        }
+      });
     });
+
 
 
     // --- 3. Scrubbing Text Stack (Section 5) ---
